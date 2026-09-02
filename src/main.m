@@ -2,55 +2,55 @@ clear all
 close all
 clc
 
-% INPUT - condition = true for manual input, condition = false for usa without input 
+% INPUT - condition = true for manual input, condition = false for use without input 
 condition = false;
 [segments n_segments] = manualSegmentInput(condition); 
 
 
 % y CALCULATION FOR THE DIFFERENT SEGMENTS
 
-H_precedenti = 0;
-theta_precedenti = 0;
+H_previous = 0;
+theta_previous = 0;
 step = 0.01;
 Theta = [];
 Y = [];
-Y_linee = [];
+Y_lines = [];
 V = [];
 
 for i = 1:n_segments
     H = segments(1, i);
-    if(i>1) H_precedenti = H_precedenti + segments(1, i-1); end
-    if(i>1) theta_precedenti = theta_precedenti + segments(2, i-1); end
+    if(i>1) H_previous = H_previous + segments(1, i-1); end
+    if(i>1) theta_previous = theta_previous + segments(2, i-1); end
     beta = segments(2, i);
-    tipologia = segments(3,i);
+    motion_type = segments(3,i);
 
     y = [];
     v = [];
     theta = 0:step:beta;
     [m n_theta] = size(theta);
-    if(i>1) Y_linee = [Y_linee, Y_linee(i-1)+beta]; 
-    else Y_linee = beta; end
+    if(i>1) Y_lines = [Y_lines, Y_lines(i-1)+beta]; 
+    else Y_lines = beta; end
 
 
-    if(tipologia==1)
+    if(motion_type==1)
         for j=1:n_theta
-            y(j) = parabolicMotion(H, beta, H_precedenti, theta(j));
+            y(j) = parabolicMotion(H, beta, H_previous, theta(j));
             v(j) = parabolicVelocity(H, beta, theta(j));
-            theta(j) = theta(j) + theta_precedenti; 
+            theta(j) = theta(j) + theta_previous; 
         end
 
-    elseif(tipologia==2)
+    elseif(motion_type==2)
         for j=1:n_theta
-            y(j) = cycloidalMotion(H, beta, H_precedenti, theta(j));
+            y(j) = cycloidalMotion(H, beta, H_previous, theta(j));
             v(j) = cycloidalVelocity(H, beta, theta(j));
-            theta(j) = theta(j) + theta_precedenti;
+            theta(j) = theta(j) + theta_previous;
         end
 
     else
         for j=1:n_theta
-            y(j) = polynomialMotion(H, beta, H_precedenti, theta(j));
+            y(j) = polynomialMotion(H, beta, H_previous, theta(j));
             v(j) = polynomialVelocity(H, beta, theta(j));
-            theta(j) = theta(j) + theta_precedenti;
+            theta(j) = theta(j) + theta_previous;
         end
        
     end
@@ -66,8 +66,8 @@ figure
 plot(Theta, Y);
 xlabel('Theta angular displacement');
 ylabel('y profile');
-for i=1:length(Y_linee)
-    line([Y_linee(i),Y_linee(i)],[min(Y),max(Y)],'Color','k')
+for i=1:length(Y_lines)
+    line([Y_lines(i),Y_lines(i)],[min(Y),max(Y)],'Color','k')
 end
 
 
