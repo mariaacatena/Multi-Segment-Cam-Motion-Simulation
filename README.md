@@ -1,4 +1,4 @@
-# Multi Segment Cam Motion Simulation
+# Multi-Segment Cam Motion Simulation
 Project developed for the Mechanics of Machines 2 exam - Automation Engineering
 
 ## Overview
