@@ -6,9 +6,9 @@ This project implements a generalized cam profile generator capable of handling 
 The MATLAB script computes displacement, velocity, and thrust angle for both centered and eccentric followers.
 
 ## Objective
--Allow the user to define any number of cam motion segments
+- Allow the user to define any number of cam motion segments
 - Implement three selectable motion laws: parabolic, cycloidal, and 5th‑degree polynomial
--Compute displacement and velocity profile
+- Compute displacement and velocity profile
 - Compute thrust angle for centered follower and for eccentric follower
 
 ## Images
